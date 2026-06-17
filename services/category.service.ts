@@ -8,7 +8,7 @@ import { Category } from '../models/category.model';
 })
 export class CategoryService {
 
-private apiUrl = 'http://localhost:8080/api';
+private apiUrl = 'https://pos-backend.onrender.com/api/categories';
 
   constructor(private http: HttpClient) { }
 
@@ -41,8 +41,7 @@ addMenuItem(item: any, file?: File): Observable<any> {
 }
 
 updateMenuItem(id: number, item: any, file?: File): Observable<any> {
-  console.log("Item being updated:", item); // 👈 Check your browser console! Is categoryName null here?
-  
+  console.log("Item being updated:", item);
   const formData = new FormData();
   formData.append('item', new Blob([JSON.stringify(item)], { type: 'application/json' }));
   if (file) formData.append('file', file);

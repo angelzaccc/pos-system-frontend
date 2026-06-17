@@ -23,7 +23,7 @@ export class CartService {
   
   cart$ = this.cartSubject.asObservable();
   
-  private apiUrl = 'http://localhost:8080/api/transactions';
+private apiUrl = 'https://pos-backend.onrender.com/api/categories';
 
   constructor(private http: HttpClient) {}
 
