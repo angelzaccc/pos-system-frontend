@@ -23,8 +23,8 @@ export class CartService {
   
   cart$ = this.cartSubject.asObservable();
   
-
-  private apiUrl = 'https://pos-backend.onrender.com/api/transactions';
+// 🚀 Update this line with the missing '-fwpu' hash!
+private apiUrl = 'https://pos-backend-fwpu.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 

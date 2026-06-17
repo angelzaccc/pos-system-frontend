@@ -8,8 +8,9 @@ import { Category } from '../models/category.model';
 })
 export class CategoryService {
 
-  // 🚀 1. This variable MUST be declared here inside the class!
-  private apiUrl = 'https://pos-backend.onrender.com/api';
+
+// 🚀 Update this line with the missing '-fwpu' hash!
+private apiUrl = 'https://pos-backend-fwpu.onrender.com/api';
 
   constructor(private http: HttpClient) { }
 
