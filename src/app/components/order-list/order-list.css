@@ -1,0 +1,103 @@
+
+.table-responsive {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #eef2f5;
+}
+
+
+.order-header h2 {
+  color: #212529;
+  letter-spacing: -0.3px;
+}
+
+
+.table th {
+  background-color: #f8f9fa !important;
+  color: #495057;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 16px 12px;
+  border-bottom: 2px solid #edf2f7 !important;
+}
+
+
+.table td {
+  padding: 16px 12px;
+  color: #495057;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+
+.id-cell {
+  color: #212529;
+  font-size: 14px;
+}
+
+.product-title-text {
+  color: #212529;
+  font-size: 14px;
+}
+
+
+.text-end {
+  text-align: right;
+}
+
+
+.price-cell {
+  font-family: inherit;
+  font-size: 14px;
+  color: #198754 !important; 
+}
+
+
+.category-pill-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+
+.path-code {
+  background-color: #f1f5f9;
+  color: #334155 !important;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+
+.items-scroll-zone {
+  max-height: 85px; 
+  overflow-y: auto; 
+  font-size: 13px; 
+  line-height: 1.4;
+  padding-right: 4px;
+}
+
+
+.items-scroll-zone::-webkit-scrollbar {
+  width: 4px;
+}
+
+.items-scroll-zone::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.items-scroll-zone::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.items-scroll-zone::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

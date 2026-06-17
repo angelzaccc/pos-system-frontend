@@ -1,0 +1,72 @@
+<div class="container mt-4">
+  <div class="order-header mb-4">
+    <h2 class="m-0 fw-bold">Customer Order History</h2>
+    <p class="text-muted small mb-0">Reviewing synchronized database transactions</p>
+  </div>
+  <br>
+
+  <div class="table-responsive shadow-sm">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th style="width: 120px;">ID / Time</th>
+          <th>Transaction ID</th>
+          <th>Customer Name</th>
+          <th>Items Purchased</th>
+          <th>Payment Method</th>
+          <th class="text-end">Grand Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tx of transactionLogs">
+          <td class="id-cell">
+            <span class="d-block fw-bold">#{{ tx.id }}</span>
+            <small class="text-muted d-block" style="font-size: 11px;">
+              {{ tx.createdAt | date:'MM/dd, h:mm a' }}
+            </small>
+          </td>
+
+          <td>
+            <code class="path-code text-dark fw-semibold" style="font-size: 12px;">
+              {{ tx.transactionId }}
+            </code>
+          </td>
+
+          <td>
+            <span class="product-title-text fw-medium">{{ tx.customerName }}</span>
+          </td>
+
+          <td>
+  <div class="items-scroll-zone">
+    <div *ngFor="let item of tx.cartItems" class="mb-1 text-secondary">
+      • <strong class="text-dark">{{ item.name }}</strong> (x{{ item.quantity }})
+      <span class="text-muted d-block" style="font-size: 11px; padding-left: 8px;">
+        Size: {{ item.selectedCupSize }} | Ice: {{ item.selectedIceLevel }}% | Sugar: {{ item.selectedSugarLevel }}%
+      </span>
+    </div>
+  </div>
+</td>
+
+          <td>
+            <span class="category-pill-badge" 
+                  [style.background-color]="tx.paymentMethod === 'Cash' ? '#e2f0d9' : '#dee2e6'" 
+                  [style.color]="tx.paymentMethod === 'Cash' ? '#385723' : '#495057'">
+              {{ tx.paymentMethod }}
+            </span>
+          </td>
+
+          <td class="price-cell text-end fw-bold text-success" style="font-size: 15px;">
+                ₱{{ tx.grandTotal | number:'1.2-2' }}
+          </td>
+        </tr>
+
+        <tr *ngIf="transactionLogs.length === 0">
+          <td colspan="6" class="text-center py-5 text-muted empty-state-row">
+            <i class="bi bi-receipt-cutoff d-block mb-2 fs-3"></i>
+            No active database order transactions found.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

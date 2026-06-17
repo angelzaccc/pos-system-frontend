@@ -1,0 +1,60 @@
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative; 
+  background-color: #f8f9fa;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.top-bar {
+  height: 70px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.menu-toggle-btn {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 15px;
+}
+.search-box input{
+    border-radius: 10px;
+    height: 30px;
+    width: 250px;
+}
+@media (max-width: 768px) {
+  .menu-toggle-btn {
+    display: block; 
+  }
+
+   .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 998; 
+    cursor: pointer;
+    display: block;
+  }
+  .search-box input{
+    border-radius: 10px;
+    height: 30px;
+    width: 200px;
+}
+}
+

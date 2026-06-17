@@ -1,0 +1,53 @@
+<div class="app-container">
+  
+  <app-sidebar 
+  [class.mobile-show]="isMenuOpen" 
+  [activeView]="currentView"
+  (viewChange)="setView($event)">
+</app-sidebar>
+  @if(isMenuOpen){
+  <div class="sidebar-overlay" *ngIf="isMenuOpen" (click)="toggleMenu()"></div>
+}
+
+  <main class="main-content">
+    <header class="top-bar">
+      
+      <button class="menu-toggle-btn" (click)="toggleMenu()">☰</button>
+
+    <!-- <div class="search-box">
+        <span>🔍</span>
+        <input type="text" placeholder="Search menu...">
+      </div>
+      
+      <div class="user-profile">
+        <span class="user-name">Admin</span>
+        <div class="avatar"></div>
+      </div>--> 
+    </header>
+
+   <section class="page-body">
+  
+  @if (currentView === 'menu') {
+
+   <app-menu></app-menu>
+  } 
+  
+  @else if (currentView === 'orders') {
+    <app-order-list></app-order-list>
+  }
+   @else if (currentView === 'history') {
+    <app-history></app-history>
+  }
+   @else if (currentView === 'bills') {
+    <app-bills></app-bills>
+  }
+  @else if (currentView === 'inventory') {
+    <app-inventory></app-inventory>
+  }
+   @else if (currentView === 'settings') {
+    <app-settings></app-settings>
+  }
+
+  </section>
+  </main>
+</div>

@@ -1,0 +1,217 @@
+<div class="main-pos-layout">
+  
+  <div class="left-workspace">
+    <div class="categories-section">
+      <h2>Categories</h2>
+      <div class="categories-container">
+        @for (cat of categories; track cat.name) {
+          <div 
+            class="category-card"
+            [class.active]="selectedCategory === cat.name"
+            (click)="selectCategory(cat.name)">
+            <div class="icon-wrapper">
+              <img [src]="cat.iconUrl" [alt]="cat.name" />
+            </div>
+            <span class="category-name">{{ cat.name }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="scrollable-menu-wrapper">
+      <div class="menu-grid">
+        <div *ngFor="let item of filteredItems" class="menu-card">
+          
+          <div class="card-image-wrapper">
+            <img [src]="item.imageUrl" [alt]="item.name" />
+          </div>
+          
+          <div class="card-content">
+            <h3>{{ item.name }}</h3>
+            <p class="stats">{{ item.available || 0 }} Available • {{ item.sold || 0 }} Sold</p>
+            <p class="price">₱ {{ item.price.toFixed(2) }}</p>
+
+            <div class="options-row">
+              <div class="option-group">
+                <label>Cup Size</label>
+                <div class="button-group">
+                  <button type="button" [class.active]="item.selectedCupSize === 'S'" (click)="selectCupSize(item, 'S')">S</button>
+                  <button type="button" [class.active]="item.selectedCupSize === 'M'" (click)="selectCupSize(item, 'M')">M</button>
+                  <button type="button" [class.active]="item.selectedCupSize === 'L'" (click)="selectCupSize(item, 'L')">L</button>
+                </div>
+              </div>
+
+              <div class="option-group">
+                <label>Ice Level</label>
+                <div class="button-group">
+                  <button type="button" [class.active]="item.selectedIceLevel === 30" (click)="selectIceLevel(item, 30)">30%</button>
+                  <button type="button" [class.active]="item.selectedIceLevel === 50" (click)="selectIceLevel(item, 50)">50%</button>
+                  <button type="button" [class.active]="item.selectedIceLevel === 100" (click)="selectIceLevel(item, 100)">100%</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="options-row">
+              <div class="option-group">
+                <label>Sugar Level</label>
+                <div class="button-group">
+                  <button type="button" [class.active]="item.selectedSugarLevel === 30" (click)="selectSugarLevel(item, 30)">30%</button>
+                  <button type="button" [class.active]="item.selectedSugarLevel === 50" (click)="selectSugarLevel(item, 50)">50%</button>
+                  <button type="button" [class.active]="item.selectedSugarLevel === 100" (click)="selectSugarLevel(item, 100)">100%</button>
+                </div>
+              </div>
+
+              <div class="option-group">
+                <label>Amount</label>
+                <div class="amount-control">
+                  <button type="button" class="round-btn" (click)="decreaseQuantity(item)">-</button>
+                  <span class="quantity-display">{{ item.quantity || 1 }}</span>
+                  <button type="button" class="round-btn plus-btn" (click)="increaseQuantity(item)">+</button>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="add-btn" (click)="addItemToCart(item)">Add to Cart</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bill-section">
+    <div class="bill-header text-center mb-3">
+      <h2 class="shop-title-main">Coffee Shop</h2>
+      <p class="shop-subtitle-meta">Quezon City</p>
+      <p class="shop-tax-id">VAT REG TIN 000-000-000-000</p>
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <span class="lbl-txn">Transaction</span>
+        <span class="transaction-id">#{{ currentTransactionId }}</span>
+      </div>
+    </div>
+
+    <div class="bill-scrollable-content">
+      
+      <div class="customer-group mb-4">
+        <label class="form-label-custom">Customer Name</label>
+        <input type="text" class="form-control-custom" [(ngModel)]="customerName" placeholder="Customer Name">
+      </div>
+
+      <div class="ordered-items-container">
+        <div *ngFor="let cartItem of cart; let idx = index" class="ordered-item-row">
+          <div class="item-main-details d-flex justify-content-between align-items-start">
+            <span class="item-name-heading">{{ cartItem.name }}</span>
+            <span class="item-price-tag">₱{{ (cartItem.price * cartItem.quantity).toFixed(2) }}</span>
+          </div>
+          
+          <div class="item-spec-grid">
+            <div class="spec-line"><span>Cup Size</span><strong>{{ cartItem.selectedCupSize }}</strong></div>
+            <div class="spec-line"><span>Ice Level</span><strong>{{ cartItem.selectedIceLevel }}%</strong></div>
+            <div class="spec-line"><span>Sugar Level</span><strong>{{ cartItem.selectedSugarLevel }}%</strong></div>
+            <div class="spec-line"><span>Amount</span>
+              <strong class="text-success">
+                {{ cartItem.quantity }}x <span class="text-muted">(₱{{ cartItem.price.toFixed(2) }}/ea)</span>
+              </strong>
+            </div>
+            <div class="text-end mt-1">
+              <button class="btn btn-sm btn-link text-danger p-0 border-0" (click)="removeItemFromCart(idx)">Remove</button>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngIf="cart.length === 0" class="text-center text-muted py-4">
+          <p>No products added to order yet.</p>
+        </div>
+      </div>
+
+      <div class="pricing-summary-block">
+        <div class="summary-row">
+          <span>Items Summary</span>
+          <strong>{{ cartService.getTotalItemsCount() }} Units</strong>
+        </div>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong>₱{{ cartService.getSubtotal().toFixed(2) }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>Tax (10% VAT)</span>
+          <strong>₱{{ cartService.getTaxAmount().toFixed(2) }}</strong>
+        </div>
+        
+        <hr class="summary-divider">
+        
+        <div class="summary-row total-grand-row">
+          <span>Total Balance</span>
+          <span class="grand-total-amount">₱{{ cartService.getGrandTotal().toFixed(2) }}</span>
+        </div>
+      </div>
+
+      <div class="payment-method-section mb-4">
+        <label class="form-label-custom">Select Payment</label>
+        <div class="payment-grid-options">
+          <div class="payment-card-option" [class.active]="paymentMethod === 'Cash'" (click)="paymentMethod = 'Cash'">
+            <img src="assets/icons/cash-icon.png" alt="Cash" class="payment-icon-img" (error)="$event.target.style.display='none'">
+            <span>Pay with Cash</span>
+          </div>
+          <div class="payment-card-option" [class.active]="paymentMethod === 'Card'" (click)="paymentMethod = 'Card'">
+            <img src="assets/icons/card-icon.png" alt="Card" class="payment-icon-img" (error)="$event.target.style.display='none'">
+            <span>Pay with Card</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bill-footer-actions">
+      <button type="button" class="process-transaction-btn" [disabled]="cart.length === 0" (click)="processTransaction()">
+        Process Transaction
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="thermal-print-receipt">
+  <div class="text-center">
+    <h3>Baked By Deane Coffee Shop</h3>
+    <p>Quezon City</p>
+    <p>VAT REG TIN 000-000-000-000</p>
+    <p style="margin-top: 6px !important;">Order #{{ currentTransactionId }}</p>
+    <p>{{ currentDateTimeString }}</p>
+  </div>
+  
+  <p>----------------------------------</p>
+  
+  <div *ngFor="let entry of cart" class="receipt-item-row">
+    <div>
+      <span>{{ entry.name }} (x{{ entry.quantity }})</span>
+      <small>Size: {{ entry.selectedCupSize }} | Ice: {{ entry.selectedIceLevel }}% | Sugar: {{ entry.selectedSugarLevel }}%</small>
+    </div>
+    <span>₱{{ (entry.price * entry.quantity).toFixed(2) }}</span>
+  </div>
+  
+  <p>----------------------------------</p>
+  
+  <div class="receipt-summary-line">
+    <span>Subtotal:</span>
+    <span>₱{{ cartService.getSubtotal().toFixed(2) }}</span>
+  </div>
+  
+  <div class="receipt-summary-line">
+    <span>VAT Tax (10%):</span>
+    <span>₱{{ cartService.getTaxAmount().toFixed(2) }}</span>
+  </div>
+  
+  <div class="receipt-summary-line grand-final">
+    <span>GRAND TOTAL:</span>
+    <span>₱{{ cartService.getGrandTotal().toFixed(2) }}</span>
+  </div>
+  
+  <p>----------------------------------</p>
+  
+  <div class="text-center" style="margin-top: 10px !important;">
+    <div>Mode of Payment: {{ paymentMethod }}</div>
+    <div>Customer: {{ customerName || 'Walk-In Customer' }}</div>
+    <p style="margin-top: 12px !important; font-weight: bold;">Thank you! Please come again!</p>
+  </div>
+</div>

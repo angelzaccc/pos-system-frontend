@@ -1,0 +1,126 @@
+<div class="container mt-4">
+  <div class="inventory-header d-flex justify-content-between align-items-center mb-4">
+    <h2 class="m-0">Stock & Product Inventory</h2>
+    <button type="button" class="add-product-btn d-flex align-items-center gap-2" (click)="onOpenAddModal()">
+      <i class="bi bi-plus-lg"></i> Add New Product
+    </button>
+  </div>
+<br>
+  <div class="table-responsive shadow-sm">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th style="width: 80px;">ID</th>
+          <th style="width: 100px;">Image</th>
+          <th>Item Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th class="text-center" style="width: 200px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of inventoryItems">
+          <td class="id-cell">#{{ item.id }}</td>
+          <td>
+            <div class="table-img-frame">
+              <img [src]="item.imageUrl" [alt]="item.name" class="img-thumbnail">
+            </div>
+          </td>
+          <td>
+            <span class="product-title-text">{{ item.name }}</span>
+          </td>
+          <td>
+            <span class="category-pill-badge">
+              {{ item.categoryName }}
+            </span>
+          </td>
+          <td class="price-cell">₱{{ item.price | number:'1.2-2' }}</td>
+          <td>
+            <div class="d-flex justify-content-center gap-2">
+              <button class="action-btn-pill edit-btn" (click)="onUpdate(item)">
+                Update
+              </button>
+              <button type="button" class="action-btn-pill delete-btn" (click)="onDelete(item)">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+        
+        <tr *ngIf="inventoryItems.length === 0">
+          <td colspan="6" class="text-center py-5 text-muted empty-state-row">
+            <i class="bi bi-box-seam d-block mb-2 fs-3"></i>
+            No inventory records available right now.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="isModalOpen"></div>
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="isModalOpen">
+  <div class="modal-dialog modal-dialog-centered custom-modal-size" role="document">
+    <div class="modal-content custom-modal-card">
+      
+      <div class="modal-header custom-modal-header">
+        <h5 class="modal-title">
+          {{ selectedItem?.id ? 'Update Inventory Details' : 'Add New Product' }}
+        </h5>
+        <button type="button" class="btn-close custom-close-btn" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body custom-modal-body" *ngIf="selectedItem">
+        <form #editForm="ngForm" class="w-100">
+          
+          <div class="form-group-wrapper mb-3">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-control" name="name" [(ngModel)]="selectedItem.name" placeholder="e.g., Avocado Ice Candy" required>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Price (₱)</label>
+              <input type="number" class="form-control" name="price" [(ngModel)]="selectedItem.price" placeholder="0.00" required>
+            </div>
+            
+            <div class="col-md-6">
+               <label class="form-label">Category Group</label>
+  
+               <select class="form-select" [(ngModel)]="selectedItem.categoryId" name="categoryId" required>
+                 <option value="" disabled selected>Select category</option>
+                 
+                 <option *ngFor="let cat of categories" [value]="cat.id">
+                   {{ cat.name }}
+                 </option>
+                </select>
+             </div>
+          </div>
+
+          <div class="form-group-wrapper mb-2">
+            <label class="form-label">Product Image Asset</label>
+            <input 
+              type="file" 
+              id="imageFilePicker" 
+              class="form-control" 
+              accept="image/*" 
+              (change)="onFileSelected($event)">
+            
+            <div class="path-display-box mt-2">
+              <span class="path-label">Current path:</span>
+              <code class="path-code">{{ selectedItem.imageUrl || 'None' }}</code>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      
+      <div class="modal-footer custom-modal-footer">
+        <button type="button" class="btn btn-cancel" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-save" (click)="onSaveChanges()">Save Changes</button>
+      </div>
+
+    </div>
+  </div>
+</div>

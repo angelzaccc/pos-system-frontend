@@ -1,0 +1,59 @@
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon"></div>
+        <span>Coffee Shop</span>
+    </div>
+
+    <nav class="sidebar-menu">
+     <a class="menu-item" 
+                [class.active]="activeView === 'menu'" 
+                (click)="navigateTo('menu')">
+             <span class="icon"><i class="fa-solid fa-bars"></i> </span>
+            <span class="menu-text">Menu</span>
+        </a>
+
+         <a class="menu-item" 
+                [class.active]="activeView === 'orders'" 
+                (click)="navigateTo('orders')">
+             <span class="icon"> <i class="fa-solid fa-cart-arrow-down"></i></span>
+            <span class="menu-text">Order List</span>
+        </a>
+<!--
+         <a class="menu-item" 
+                [class.active]="activeView === 'history'" 
+                (click)="navigateTo('history')">
+             <span class="icon"><i class="fa-regular fa-clock"></i></span>
+            <span class="menu-text">History</span>
+        </a>
+
+         <a class="menu-item" 
+                [class.active]="activeView === 'bills'" 
+                (click)="navigateTo('bills')">
+             <span class="icon"><i class="fa-solid fa-receipt"></i></span>
+            <span class="menu-text">Bills</span>
+        </a>-->
+        <a class="menu-item" 
+                [class.active]="activeView === 'inventory'" 
+                (click)="navigateTo('inventory')">
+             <span class="icon"><i class="fa-regular fa-note-sticky"></i></span>
+            <span class="menu-text">inventory</span>
+        </a>
+
+        <a class="menu-item" 
+                [class.active]="activeView === 'settings'" 
+                (click)="navigateTo('settings')">
+             <span class="icon"><i class="fa-solid fa-gear"></i></span>
+            <span class="menu-text">Settings</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="#" class="menu-item logout">
+            <span class="icon"><i class="fa-solid fa-arrow-down"></i></span>
+            <span class="menu-text">Logout</span>
+
+        </a>
+    </div>
+</aside>
+    
+
