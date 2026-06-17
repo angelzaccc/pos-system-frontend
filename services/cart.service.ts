@@ -23,7 +23,9 @@ export class CartService {
   
   cart$ = this.cartSubject.asObservable();
   
-private apiUrl = 'https://pos-backend.onrender.com/api/cart';
+  // 🚀 Change this to match your Spring Boot PostMapping controller endpoint!
+  // (e.g., if your Java backend uses @RequestMapping("/api/transactions") or "/api/orders")
+  private apiUrl = 'https://pos-backend.onrender.com/api/transactions';
 
   constructor(private http: HttpClient) {}
 
